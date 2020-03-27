@@ -1,1 +1,1 @@
-# IQTutor
+# ICGLOBAL MAP
