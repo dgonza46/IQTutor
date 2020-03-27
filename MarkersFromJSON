@@ -55,6 +55,9 @@
             var arrayLong;
             var arrayName;
             var arrayLocation;
+            var arrayYear;
+            var arrayInstitution;
+            var arrayURL;
            // var infoWindow = new google.maps.InfoWindow();
             var marker;
             
@@ -94,7 +97,7 @@
     </script>
 
       
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8_QPA4O0YWXXZ4RwILEePsyRWdNBZcIA&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key=<replace with API KEY here>&callback=initMap"
     async defer></script>
   </body>
 </html>
