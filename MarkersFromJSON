@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Map Demo</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 375px;
+        width: 100%;
+        top: 200px;
+        
+      }
+
+    </style>
+ </head>
+    <h1>Testing Page</h1>
+    
+  <body>
+      <p id="testing">words</p>
+    <div id="map"></div>
+    <script>
+      var map;
+      var myLatLng = {lat: 1.347682, lng: 103.683266};
+      var myLatLng2 = {lat: 46.011452, lng: 8.958066};
+      var myLatLng3 = {lat: 53.1068, lng: 8.852};
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 1.347682, lng: 103.683266},
+          zoom: 4
+        });
+          
+          
+           //JSON Reading 
+         var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+        //object retrieval    
+            var jsonObject = JSON.parse(this.responseText);
+            console.log(jsonObject);
+            var specificObj = jsonObject[2]['Longitudes'];
+        //object turned into string  
+            var objectString = JSON.stringify(jsonObject);
+            var specificObj = JSON.stringify(specificObj);
+            console.log("specificObj:"+specificObj);
+
+          document.getElementById("testing").innerHTML = objectString;
+              
+            //start demo area  
+            var index;
+            var count = 0;
+            var arrayLat;
+            var arrayLong;
+            var arrayName;
+            var arrayLocation;
+           // var infoWindow = new google.maps.InfoWindow();
+            var marker;
+            
+              for (index in jsonObject) {
+                  arrayLat = jsonObject[index]['Lattitudes'];
+                  arrayLong = jsonObject[index]['Longitudes'];
+                  arrayName = jsonObject[index]['ResearcherName'];
+                  arrayLocation = jsonObject[index]['Location'];
+                  arrayYear = jsonObject[index]["Year"];
+                  arrayInstitution = jsonObject[index]["Institution"];
+                  arrayURL= jsonObject[index]["URL"];
+                  var latLng = new google.maps.LatLng(arrayLat,arrayLong);
+                  
+                  
+                  console.log(count+"length= "+jsonObject.length);
+      
+                  var latLng = new google.maps.LatLng(arrayLat,arrayLong);
+                  var marker = new google.maps.Marker({
+                  position: latLng,
+                  map: map
+                  });
+            
+                  count++;
+                 
+              }
+              
+            //end area
+          }
+        };
+        xmlhttp.open("GET", "https://api.myjson.com/bins/64iem", true);
+        xmlhttp.send(); //end JSON manipulation
+  
+        
+      }   //func init end
+    
+            
+    </script>
+
+      
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8_QPA4O0YWXXZ4RwILEePsyRWdNBZcIA&callback=initMap"
+    async defer></script>
+  </body>
+</html>
