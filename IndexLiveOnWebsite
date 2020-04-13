@@ -44,7 +44,6 @@
           zoom: 4
         });
           
-          
            //JSON Reading 
          var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
