@@ -152,6 +152,15 @@
                     // Note: If you call open() without passing a marker, the InfoWindow will use the position specified upon construction through the InfoWindowOptions object literal.
                   });
                 
+//                 if (!marker.open){
+//                         this.info.open(marker_map,this);
+//                         marker.open = true;
+//                       }
+//                       else{
+//                         this.info.close(marker_map,this);
+//                         marker.open = false;
+//                       }
+                
                   allMarkersArray.push(marker);
                   
                   count++;
@@ -163,7 +172,7 @@
             
           }
         };
-        xmlhttp.open('GET', 'https://api.jsonbin.io/b/5e9277c38e85c8437014c7fe/1', true);
+        xmlhttp.open('GET', 'https://api.jsonbin.io/b/5e9277c38e85c8437014c7fe/4', true);
         xmlhttp.send(); //end JSON manipulation
   
      filterMarkers = function (category) {
@@ -196,7 +205,7 @@
       <option value="Alumni">Alumni</option>
     </select></p>
       
-    <script src="https://maps.googleapis.com/maps/api/js?key=<insert key here>&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTI3Uov0uijAmOr1qh3l3Iqbi3QZyaM1Y&callback=initMap"
     async defer></script>
       
 
