@@ -24,11 +24,8 @@
   <body> 
       <p id="testing">words</p>
       
-      <select id="choices" onchange="filterMarkers(this.value);">
-            <option value="">Please select category</option>
-            <option value="faculty">Filter faculty</option>
-            <option value="alumni">Filter alumni</option>
-      </select>
+      <button id= "toggleAlumni" type="button" onclick=filterMarkers()>Hide Alumni</button>
+
       
     <div id="map"></div>
       
@@ -43,6 +40,7 @@
           center: {lat: 1.347682, lng: 103.683266},
           zoom: 4
         });
+          
           
            //JSON Reading 
          var xmlhttp = new XMLHttpRequest();
@@ -71,11 +69,10 @@
             var arrayURL;
             var contentString;
             var arrayResearcherType;
-           // var infoWindow = new google.maps.InfoWindow();
             var marker;
             var allMarkersArray = [];
               
-              map.markers=[];
+             // map.markers=[];
             var alumniArray = [];
             var facultyArray = [];  
             var status = "";
@@ -100,12 +97,14 @@
                   
                   if (arrayResearcherType == "1") {
                       status = "Faculty";
+                      facultyArray.push(marker);
                   }
                   else {
                       status = "Alumni";
+                      alumniArray.push(marker);
                   }
                   
-                
+                  
                   if (arrayURL == "") {
                   contentString= '<div id="content">'+
                     '<div id="description">'+
@@ -129,7 +128,8 @@
                     '<p>URL: <a href="'+arrayURL+'">'+arrayURL+'</a>'+
                     '</div>';
                   }
-                
+       
+                  //addDomListener(instance:document.getElementById('choices'), eventName:'filter', handler:filterMarkers);
                   
                   var marker = new google.maps.Marker({
                   map: map,
@@ -148,11 +148,10 @@
                     this.info.open(marker_map, this);
                     // this.info.open(marker_map, this);
                     // Note: If you call open() without passing a marker, the InfoWindow will use the position specified upon construction through the InfoWindowOptions object literal.
-                });
+                  });
+                
+                  allMarkersArray.push(marker);
                   
-                    facultyArray.push(marker);
-                    alumniArray.push(marker);
-
                   count++;
                  
               }
@@ -160,45 +159,31 @@
                console.log(facultyArray);
                console.log(alumniArray);
             
-              
-              
-//               filterMarkers = function (workType) {
-//            //if no category
-//            if(workType == ""){
-//             for(var i = 0; i < alumniArray;i++){
-//                 marker = alumniArray[i];
-//                 marker.setVisible(true);
-//                 console.log("NO cat");
+//              
+//               function setMapOnAll(num) {
+//               if (num == 1){
+//                 for (var i = 0; i < alumniArray.length; i++) {
+//                  alumniArray[i].setMap(null);
+//                   }
+//               }
+//                  else{
+//                   for (var i = 0; i < alumniArray.length; i++) {
+//                  alumniArray[i].setMap(map);
+//                   }
+//                  }
+//              }
+//
+//              
+//               filterMarkers = function () {
+//             console.log("hide alumni");
+//                   setMapOnAll(1);
+//             for(var i = 0; i < alumniArray.length;i++){
+//                 currentMarker = alumniArray[i];
+//                 currentMarker.visible = false;
 //                 
+//                 console.log("hide alumni2");
 //             } 
-//            for(var j = 0; j < alumniArray;j++){
-//                  marker = facultyArray[j];
-//                 marker.setVisible(true);
-//             } 
-//            }
-//            //if faculty selected
-//            else if (workType == "faculty"){
-//            for(var i = 0; i < alumniArray;i++){
-//                 marker = alumniArray[i];
-//                 marker.setVisible(false);
-//                console.log("no alumni");
-//             } 
-//            for(var j = 0; j < alumniArray;j++){
-//                  marker = facultyArray[j];
-//                 marker.setVisible(true);
-//             }    
-//            }
-//            else {
-//                for(var i = 0; i < alumniArray;i++){
-//                 marker = alumniArray[i];
-//                 marker.setVisible(true);
-//                    console.log("no faculty");
-//             } 
-//            for(var j = 0; j < alumniArray;j++){
-//                 marker = facultyArray[j];
-//                 marker.setVisible(false);
-//             } 
-//            }
+//        
 //        }//end filterMarker func  
 //          
               
@@ -221,7 +206,7 @@
     </script>
 
       
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTI3Uov0uijAmOr1qh3l3Iqbi3QZyaM1Y&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key=<INSERTKEY>&callback=initMap"
     async defer></script>
   </body>
 </html>
