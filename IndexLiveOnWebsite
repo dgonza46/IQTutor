@@ -22,19 +22,17 @@
     <h1>Testing Page</h1>
     
   <body> 
-      <p id="testing">words</p>
-      
-      <button id= "toggleAlumni" type="button" onclick=filterMarkers()>Hide Alumni</button>
 
       
     <div id="map"></div>
-      
       
     <script>
       var map;
       var myLatLng = {lat: 1.347682, lng: 103.683266};
       var myLatLng2 = {lat: 46.011452, lng: 8.958066};
       var myLatLng3 = {lat: 53.1068, lng: 8.852};
+        
+        
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 1.347682, lng: 103.683266},
@@ -44,20 +42,8 @@
           
            //JSON Reading 
          var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-        //object retrieval    
-            var jsonObject = JSON.parse(this.responseText);
-            console.log(jsonObject);
-            var specificObj = jsonObject[2]['Longitudes'];
-        //object turned into string  
-            var objectString = JSON.stringify(jsonObject);
-            var specificObj = JSON.stringify(specificObj);
-            console.log("specificObj:"+specificObj);
-
-         // document.getElementById("testing").innerHTML = objectString;
-              
-            //start demo area  
+          
+                      //start demo area  
             var index;
             var count = 0;
             var arrayLat;
@@ -78,6 +64,20 @@
             var status = "";
             var workStatus;
             
+          
+        xmlhttp.onreadystatechange = function() {
+            
+          if (this.readyState == 4 && this.status == 200) {
+        //object retrieval    
+            var jsonObject = JSON.parse(this.responseText);
+            console.log(jsonObject);
+            var specificObj = jsonObject[2]['Longitudes'];
+        //object turned into string  
+            var objectString = JSON.stringify(jsonObject);
+            var specificObj = JSON.stringify(specificObj);
+            console.log("specificObj:"+specificObj);
+              
+
               for (index in jsonObject) {
                   arrayLat = jsonObject[index]['Lattitudes'];
                   arrayLong = jsonObject[index]['Longitudes'];
@@ -138,6 +138,8 @@
                   visible: true    
                   });
                   
+                  marker.category = status;
+                  
                   marker.info = new google.maps.InfoWindow({
                       content: contentString
                   });
@@ -159,54 +161,44 @@
                console.log(facultyArray);
                console.log(alumniArray);
             
-//              
-//               function setMapOnAll(num) {
-//               if (num == 1){
-//                 for (var i = 0; i < alumniArray.length; i++) {
-//                  alumniArray[i].setMap(null);
-//                   }
-//               }
-//                  else{
-//                   for (var i = 0; i < alumniArray.length; i++) {
-//                  alumniArray[i].setMap(map);
-//                   }
-//                  }
-//              }
-//
-//              
-//               filterMarkers = function () {
-//             console.log("hide alumni");
-//                   setMapOnAll(1);
-//             for(var i = 0; i < alumniArray.length;i++){
-//                 currentMarker = alumniArray[i];
-//                 currentMarker.visible = false;
-//                 
-//                 console.log("hide alumni2");
-//             } 
-//        
-//        }//end filterMarker func  
-//          
-              
-              
-              
-            //end area
           }
         };
         xmlhttp.open('GET', 'https://api.jsonbin.io/b/5e9277c38e85c8437014c7fe/1', true);
         xmlhttp.send(); //end JSON manipulation
   
+     filterMarkers = function (category) {
+            
+    for (i = 0; i < allMarkersArray.length; i++) {
+        marker = allMarkersArray[i];
+        // If is same category or category not picked
+        if (marker.category == category || category.length === 0) {
+            marker.setVisible(true);
+        }
+        // Categories don't match 
+        else {
+            marker.setVisible(false);
+        }
+    }
+            
+}
           
       }   //func init end
     
                   
-          
+   
              
         
         
     </script>
-
+<br><p>    <select id="hello" onchange="filterMarkers(this.value);">
+    <option value="">Please select a researcher type</option>
+    <option value="Faculty">Faculty</option>
+      <option value="Alumni">Alumni</option>
+    </select></p>
       
-    <script src="https://maps.googleapis.com/maps/api/js?key=<INSERTKEY>&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key=<insert key here>&callback=initMap"
     async defer></script>
+      
+
   </body>
 </html>
